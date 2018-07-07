@@ -1,0 +1,199 @@
+<script src="https://cdn.jsdelivr.net/d3js/3.5.17/d3.min.js" charset="utf-8"></script>
+<script src="https://cdn.jsdelivr.net/npm/taucharts@1/build/production/tauCharts.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/taucharts@1/build/production/tauCharts.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+
+<div id="line" class="container"></div>
+<div class="container">
+</div>
+<div class="container">
+  <table class="table table-bordered table-hit-list">
+    <tr>
+      <th>Description</th>
+      <th>Failure Percentage</th>
+    </tr>
+    <tr>
+      <td>Alfreds Futterkiste</td>
+      <td>Maria Anders</td>
+    </tr>
+    <tr>
+      <td>Centro comercial Moctezuma</td>
+      <td>Francisco Chang</td>
+    </tr>
+    <tr>
+      <td>Ernst Handel</td>
+      <td>Roland Mendel</td>
+    </tr>
+    <tr>
+      <td>Island Trading</td>
+      <td>Helen Bennett</td>
+    </tr>
+    <tr>
+      <td>Laughing Bacchus Winecellars</td>
+      <td>Yoshi Tannamuri</td>
+    </tr>
+    <tr>
+      <td>Magazzini Alimentari Riuniti</td>
+      <td>Giovanni Rovelli</td>
+    </tr>
+  </table>
+</div>
+<div class="container"></div>
+
+<style>
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+.container {
+  width: 50%;
+  height: 50%;
+  float: left;
+}
+
+.container:nth-of-type(2) {
+    border-left: 1px solid black;
+}
+
+.container:nth-of-type(3) {
+    border-top: 1px solid black;
+}
+
+.container:nth-of-type(4) {
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+}
+
+.table-hit-list {
+  margin: 5% auto;
+}
+</style>
+
+<script>
+var rawData = [{
+  description:'loggregator', failPercentage:4, date:new Date('2018-06-17')
+},{
+  description:'loggregator', failPercentage:4, date:new Date('2018-06-16')
+},{
+  description:'loggregator', failPercentage:8, date:new Date('2018-06-15')
+},{
+  description:'loggregator', failPercentage:6, date:new Date('2018-06-14')
+},{
+  description:'loggregator', failPercentage:6, date:new Date('2018-06-13')
+},{
+  description:'loggregator', failPercentage:7, date:new Date('2018-06-12')
+},{
+  description:'loggregator', failPercentage:21, date:new Date('2018-06-11')
+},{
+  description:'windows', failPercentage:9, date:new Date('2018-06-17')
+},{
+  description:'windows', failPercentage:6, date:new Date('2018-06-16')
+},{
+  description:'windows', failPercentage:3, date:new Date('2018-06-15')
+},{
+  description:'windows', failPercentage:1, date:new Date('2018-06-14')
+},{
+  description:'windows', failPercentage:1, date:new Date('2018-06-13')
+},{
+  description:'windows', failPercentage:3, date:new Date('2018-06-12')
+},{
+  description:'windows', failPercentage:21, date:new Date('2018-06-11')
+},{
+  description:'v3', failPercentage:21, date:new Date('2018-06-11')
+},{
+  description:'v3', failPercentage:7, date:new Date('2018-06-16')
+},{
+  description:'v3', failPercentage:10, date:new Date('2018-06-15')
+},{
+  description:'v3', failPercentage:9, date:new Date('2018-06-14')
+},{
+  description:'v3', failPercentage:8, date:new Date('2018-06-13')
+},{
+  description:'v3', failPercentage:1, date:new Date('2018-06-12')
+},{
+  description:'v3', failPercentage:0, date:new Date('2018-06-17')
+}];
+var defData = flatten(rawData);
+//var defData = [{
+//  description:'loggregator', failPercentage:4, date:new Date('2018-06-17')
+//},{
+//  description:'loggregator', failPercentage:4, date:new Date('2018-06-16')
+//},{
+//  description:'loggregator', failPercentage:8, date:new Date('2018-06-15')
+//},{
+//  description:'loggregator', failPercentage:6, date:new Date('2018-06-14')
+//},{
+//  description:'loggregator', failPercentage:6, date:new Date('2018-06-13')
+//},{
+//  description:'loggregator', failPercentage:7, date:new Date('2018-06-12')
+//},{
+//  description:'loggregator', failPercentage:21, date:new Date('2018-06-11')
+//},{
+//  description:'windows', failPercentage:9, date:new Date('2018-06-17')
+//},{
+//  description:'windows', failPercentage:6, date:new Date('2018-06-16')
+//},{
+//  description:'windows', failPercentage:3, date:new Date('2018-06-15')
+//},{
+//  description:'windows', failPercentage:1, date:new Date('2018-06-14')
+//},{
+//  description:'windows', failPercentage:1, date:new Date('2018-06-13')
+//},{
+//  description:'windows', failPercentage:3, date:new Date('2018-06-12')
+//},{
+//  description:'windows', failPercentage:21, date:new Date('2018-06-11')
+//},{
+//  description:'v3', failPercentage:21, date:new Date('2018-06-11')
+//},{
+//  description:'v3', failPercentage:7, date:new Date('2018-06-16')
+//},{
+//  description:'v3', failPercentage:10, date:new Date('2018-06-15')
+//},{
+//  description:'v3', failPercentage:9, date:new Date('2018-06-14')
+//},{
+//  description:'v3', failPercentage:8, date:new Date('2018-06-13')
+//},{
+//  description:'v3', failPercentage:1, date:new Date('2018-06-12')
+//},{
+//  description:'v3', failPercentage:0, date:new Date('2018-06-17')
+//}];
+var chart = new tauCharts.Chart({
+            guide:{
+              padding:{l:70, t:10, b:70,r:10},
+              showGridLines:'xy',
+              y:{
+                min: 0,
+                nice: false,
+                label:{
+                  text:'Failure Percentage',
+                  padding:30
+                }
+              },
+              x:{
+                label:'Day',
+                tickPeriod:'day'
+              }
+            },
+            data: defData,
+            type: 'line',
+            x: 'date',
+            y: 'failPercentage',
+            color: 'description',
+            plugins: [
+              tauCharts.api.plugins.get('tooltip')(),
+            ]
+        });
+
+  chart.renderTo('#line');
+</script>
